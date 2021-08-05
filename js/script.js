@@ -5,10 +5,12 @@ FSJS Project 2 - Data Pagination and Filtering
 
 
 
-//const variables used in multiple functions/events
+//variables used in multiple functions/events
 const itemsPerPage = 9;
 const linkList = document.querySelector('.link-list');
 const studentList = document.querySelector('.student-list');
+let itemData = data;
+let currentPage = 1;
 
 
 //showPage function to grab data from array and display correct data
@@ -71,7 +73,7 @@ function insertSearchBar() {
 
 
 // Call functions
-showPage(data, 1);
+showPage(data, currentPage);
 addPagination(data);
 insertSearchBar();
 
@@ -83,8 +85,9 @@ const searchBtn = document.querySelector('button.submit');
 linkList.addEventListener('click', (e) => {
    if (e.target.tagName === 'BUTTON') {
       document.querySelector('button.active').className = '';
+      currentPage = e.target.innerText;
       e.target.className = "active";
-      showPage(data, e.target.textContent);
+      showPage(itemData, currentPage);
    }
 });
 
@@ -101,7 +104,9 @@ searchField.addEventListener('keyup', () => {
          student.name.last.toUpperCase().includes(searchText)
       );
    });
-   showPage(filteredList, 1);
-   addPagination(filteredList);
+   itemData = filteredList;
+   currentPage = 1
+   showPage(itemData, currentPage);
+   addPagination(itemData);
  
 });
