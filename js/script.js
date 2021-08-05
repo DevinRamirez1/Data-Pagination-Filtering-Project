@@ -64,14 +64,15 @@ function insertSearchBar() {
    header.insertAdjacentHTML("beforeend", searchBarHTML);
 }
 
-// Variables for search bar
-const searchField = document.getElementById('search');
-const searchBtn = document.querySelector('button.submit');
 
 // Call functions
 showPage(data, 1);
 addPagination(data);
 insertSearchBar();
+
+// Variables for search bar
+const searchField = document.getElementById('search');
+const searchBtn = document.querySelector('button.submit');
 
 //click event for pagination buttons
 linkList.addEventListener('click', (e) => {
@@ -95,5 +96,6 @@ searchField.addEventListener('keyup', () => {
          student.name.last.toUpperCase().includes(searchText)
       );
    });
-   displayStudents(filteredList);
+   showPage(filteredList, 1);
+   addPagination(filteredList);
 });
