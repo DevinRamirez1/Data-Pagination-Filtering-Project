@@ -8,32 +8,37 @@ FSJS Project 2 - Data Pagination and Filtering
 //const variables used in multiple functions/events
 const itemsPerPage = 9;
 const linkList = document.querySelector('.link-list');
-let studentList = document.querySelector('.student-list');
+const studentList = document.querySelector('.student-list');
 
 
 //showPage function to grab data from array and display correct data
 function showPage(list, page) {
-   const startIndex = (page * 9) - 9;
-   const endIndex = (page * 9);
-
+   const startIndex = (page * itemsPerPage) - itemsPerPage;
+   const endIndex = (page * itemsPerPage);
    studentList.innerHTML = '';
-   for (i = 0; i < list.length; i++) {
-      if (i >= startIndex && i < endIndex) {
-         let studentInfo = `
-               <li class=""student-item cf">
-                  <div class="student-details">
-                     <img class="avatar" src="${list[i].picture.large}" alt="Profile Picture">
-                     <h3>${list[i].name.first} ${list[i].name.last}</h3>    
-                     <span class="email">${list[i].email}</span>
-                  </div>
-                  <div class="joined-details">
-                     <span class="date">Joined ${list[i].registered.date}</span>
-                  </div>
-               </li>`;
-         studentList.insertAdjacentHTML("beforeend", studentInfo);
+   let studentInfo = '';
+   //If no results found during search
+   if(list.length === 0){
+      studentInfo += `<p class="no-results">No Results Found</p>`;
+   } else {
+      for (i = 0; i < list.length; i++) {
+       if (i >= startIndex && i < endIndex) {
+            studentInfo += `
+                  <li class="student-item cf">
+                     <div class="student-details">
+                        <img class="avatar" src="${list[i].picture.large}" alt="Profile Picture">
+                        <h3>${list[i].name.first} ${list[i].name.last}</h3>    
+                        <span class="email">${list[i].email}</span>
+                     </div>
+                     <div class="joined-details">
+                        <span class="date">Joined ${list[i].registered.date}</span>
+                   </div>
+                  </li>`;
+         
       }
    }
-
+ }
+   studentList.insertAdjacentHTML("beforeend", studentInfo);
 }
 
 
@@ -54,7 +59,7 @@ function addPagination(list) {
 
 //function to create and insert search bar in to header
 function insertSearchBar() {
-   let header = document.querySelector('.header');
+   const header = document.querySelector('.header');
    searchBarHTML = `
    <label for="search" class="student-search">
             <span>Search by name</span>
@@ -98,4 +103,5 @@ searchField.addEventListener('keyup', () => {
    });
    showPage(filteredList, 1);
    addPagination(filteredList);
+ 
 });
