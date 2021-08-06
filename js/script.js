@@ -52,11 +52,12 @@ function addPagination(list) {
    for (i = 1; i <= numOfPages; i++) {
       let button = `
          <li>
-            <button type="button">${i}</button>
+            <button type="button" id="pages">${i}</button>
          </li>`;
       linkList.insertAdjacentHTML("beforeend", button);
    }
-   document.getElementsByTagName('button')[0].className = "active";
+   const firstBtn =document.getElementById('pages');
+   firstBtn.className = "active";
 };
 
 //function to create and insert search bar in to header
